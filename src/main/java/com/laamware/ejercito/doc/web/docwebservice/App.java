@@ -117,10 +117,10 @@ public class App {
         return transactionManager;
     }
 
-    @Bean
-    public SessionFactory sessionFactory(HibernateEntityManagerFactory hemf) {
-        return hemf.getSessionFactory();
-    }
+//    @Bean
+//    public SessionFactory sessionFactory(HibernateEntityManagerFactory hemf) {
+//        return hemf.getSessionFactory();
+//    }
 
     /**
      * Construye la clase StringEncryptor con sus atributos, la cual permite
