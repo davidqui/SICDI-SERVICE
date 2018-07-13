@@ -1,7 +1,7 @@
 package com.laamware.ejercito.doc.web.docwebservice.entity;
 
 import com.laamware.ejercito.doc.web.docwebservice.util.GeneralUtils;
-import com.laamware.ejercito.doc.web.entity.Clasificacion;
+import com.laamware.ejercito.doc.web.docwebservice.entity.Clasificacion;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

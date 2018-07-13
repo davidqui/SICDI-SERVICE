@@ -149,4 +149,7 @@ public class Instancia extends AuditModifySupport {
         this.service = service;
     }
 
+    public Variable setVariable(String key, String value) {
+        return service.setVariable(this, key, value);
+    }
 }

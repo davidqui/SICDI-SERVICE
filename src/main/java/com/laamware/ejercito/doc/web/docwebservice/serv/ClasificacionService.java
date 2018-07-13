@@ -5,8 +5,8 @@
  */
 package com.laamware.ejercito.doc.web.docwebservice.serv;
 
+import com.laamware.ejercito.doc.web.docwebservice.entity.Clasificacion;
 import com.laamware.ejercito.doc.web.docwebservice.repo.ClasificacionRepository;
-import com.laamware.ejercito.doc.web.entity.Clasificacion;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -25,7 +25,7 @@ public class ClasificacionService {
         private ClasificacionRepository clasificacionRepository;
             
         public synchronized List<Clasificacion> findAllActivoOrderByOrden() {
-            List<Clasificacion> listaClas = clasificacionRepository.findByActivo(true, new Sort(Sort.Direction.ASC, "orden"));
+            List<Clasificacion> listaClas = clasificacionRepository.findAll();
             return listaClas;
         }
 }

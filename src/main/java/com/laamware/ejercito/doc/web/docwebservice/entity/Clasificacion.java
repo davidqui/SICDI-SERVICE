@@ -1,4 +1,4 @@
-package com.laamware.ejercito.doc.web.entity;
+package com.laamware.ejercito.doc.web.docwebservice.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +12,7 @@ import org.hibernate.annotations.Parameter;
 
 @Entity
 @Table(name = "CLASIFICACION")
-public class Clasificacion {
+public class Clasificacion extends AuditActivoModifySupport{
 
     @Id
     @GenericGenerator(name = "CLASIFICACION_SEQ", strategy = "sequence", parameters = {
@@ -27,9 +27,6 @@ public class Clasificacion {
 
     @Column(name = "CLA_ORDEN")
     private Integer orden;
-    
-    @Column(name = "ACTIVO")
-    private Integer activo;
 
     /**
      * Constructor vacío.
@@ -82,15 +79,4 @@ public class Clasificacion {
     public void setOrden(Integer orden) {
         this.orden = orden;
     }
-
-    public Integer getActivo() {
-        return activo;
-    }
-
-    public void setActivo(Integer activo) {
-        this.activo = activo;
-    }
-    
-    
-
 }

@@ -8,7 +8,9 @@ package com.laamware.ejercito.doc.web.docwebservice.serv;
 
 import com.laamware.ejercito.doc.web.docwebservice.entity.Instancia;
 import com.laamware.ejercito.doc.web.docwebservice.entity.Usuario;
+import com.laamware.ejercito.doc.web.docwebservice.entity.Variable;
 import com.laamware.ejercito.doc.web.docwebservice.repo.InstanciaRepository;
+import com.laamware.ejercito.doc.web.docwebservice.repo.VariableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +24,10 @@ import org.springframework.stereotype.Service;
 public class ProcesoService {
 
     @Autowired
-    public InstanciaRepository instanciaRepository;
+    private InstanciaRepository instanciaRepository;
+    
+    @Autowired
+    private VariableRepository variableRepository;
     
     /**
      * Crea una nueva instancia de un proceso. Tener en cuenta que la instancia
@@ -43,5 +48,30 @@ public class ProcesoService {
         instanciaRepository.saveAndFlush(i);
         String id = i.getId();
         return id;
+    }
+    
+    /**
+     * Obtiene el objeto de instancia de proceso
+     *
+     * @param pin Identificador único de la instancia
+     * @return El objeto de instancia de proceso
+     */
+    public Instancia instancia(String pin) {
+        Instancia i = instanciaRepository.getOne(pin);
+        i.setService(this);
+        return i;
+    }
+    
+    public Variable setVariable(Instancia instancia, String key, String value) {
+        Variable v = instancia.findVariable(key);
+        if (v != null) {
+            v.setValue(value);
+            variableRepository.save(v);
+        } else {
+            v = new Variable(key, value, instancia);
+            instancia.getVariables().add(v);
+            variableRepository.save(v);
+        }
+        return v;
     }
 }
