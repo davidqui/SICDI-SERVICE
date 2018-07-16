@@ -31,8 +31,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ApiController {
     public static final String PATH = "/test-documento";
     
-//    @Autowired
-//    private ClasificacionService clasificacionService;
+    @Autowired
+    private ClasificacionService clasificacionService;
     
     @Autowired
     private DocumentoService documentoService;
@@ -40,22 +40,22 @@ public class ApiController {
     @Autowired
     private UsuarioRepository usuarioRepository;
     
-//    @RequestMapping(value = "", method = RequestMethod.GET)
-//    public ResponseEntity<List<Clasificacion>> clasificaciones(){
-//        System.out.println("com.laamware.ejercito.doc.web.docwebservice.contr.TestController.clasificaciones()");
-//        List<Clasificacion> users = clasificacionService.findAllActivoOrderByOrden();
-//        if (users.isEmpty()) {
-//            return new ResponseEntity(HttpStatus.NO_CONTENT);
-//            // You many decide to return HttpStatus.NOT_FOUND
-//        }
-//        return new ResponseEntity<List<Clasificacion>>(users, HttpStatus.OK);
-//    }
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public ResponseEntity<List<Clasificacion>> clasificaciones(){
+        System.out.println("com.laamware.ejercito.doc.web.docwebservice.contr.TestController.clasificaciones()");
+        List<Clasificacion> users = clasificacionService.findAllActivoOrderByOrden();
+        if (users.isEmpty()) {
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+            // You many decide to return HttpStatus.NOT_FOUND
+        }
+        return new ResponseEntity<List<Clasificacion>>(users, HttpStatus.OK);
+    }
     
     @RequestMapping(path="", method= RequestMethod.POST, consumes =  MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> postDocumento(@RequestBody DocumentoDTO document){
-        documentoService.crearDocumento(9, usuarioRepository.getOne(141));
+        documentoService.crearDocumento(9, usuarioRepository.getOne(141), document);
         
-        System.out.println(document.toString());
+        System.out.println("OK");
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
