@@ -97,7 +97,7 @@ public class App {
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("com.laamware.ejercito.doc.web.entity");
+        factory.setPackagesToScan("com.laamware.ejercito.doc.web.docwebservice.entity");
         factory.setDataSource(dataSource);
         Properties props = new Properties();
         props.put("hibernate.ddl.auto", "none");

@@ -11,6 +11,7 @@ import com.laamware.ejercito.doc.web.docwebservice.entity.Usuario;
 import com.laamware.ejercito.doc.web.docwebservice.entity.Variable;
 import com.laamware.ejercito.doc.web.docwebservice.repo.InstanciaRepository;
 import com.laamware.ejercito.doc.web.docwebservice.repo.VariableRepository;
+import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +46,10 @@ public class ProcesoService {
         // iniciales
         Instancia i = Instancia.create(procesoId);
         i.setAsignado(usuario);
+        i.setCuando(new Date());
+        i.setQuien(usuario.getId());
+        i.setCuandoMod(new Date());
+        i.setQuienMod(usuario.getId());
         instanciaRepository.saveAndFlush(i);
         String id = i.getId();
         return id;
@@ -62,14 +67,20 @@ public class ProcesoService {
         return i;
     }
     
-    public Variable setVariable(Instancia instancia, String key, String value) {
+    public Variable setVariable(Instancia instancia, String key, String value, Integer usuID) {
         Variable v = instancia.findVariable(key);
         if (v != null) {
             v.setValue(value);
+            v.setCuando(new Date());
+            v.setQuien(usuID);
+            v.setActivo(Boolean.TRUE);
             variableRepository.save(v);
         } else {
             v = new Variable(key, value, instancia);
             instancia.getVariables().add(v);
+            v.setCuando(new Date());
+            v.setQuien(usuID);
+            v.setActivo(Boolean.TRUE);
             variableRepository.save(v);
         }
         return v;

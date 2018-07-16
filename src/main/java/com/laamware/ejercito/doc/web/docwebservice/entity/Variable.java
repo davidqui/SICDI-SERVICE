@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -27,10 +28,8 @@ public class Variable extends AuditActivoModifySupport {
 	public static final String PROC_CURRENT_LOCATION = "proc.current.location";
 
 	@Id
-	@GenericGenerator(name = "PROCESO_INSTANCIA_VAR_SEQ", strategy = "sequence", parameters = {
-			@Parameter(name = "sequence", value = "PROCESO_INSTANCIA_VAR_SEQ"),
-			@Parameter(name = "allocationSize", value = "1") })
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PROCESO_INSTANCIA_VAR_SEQ")
+        @SequenceGenerator(name = "SEQ_PROCESO_INSTANCIA_VAR", sequenceName = "PROCESO_INSTANCIA_VAR_SEQ", allocationSize = 1) 
+        @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PROCESO_INSTANCIA_VAR")
 	@Column(name = "PIV_ID")
 	private Integer id;
 
