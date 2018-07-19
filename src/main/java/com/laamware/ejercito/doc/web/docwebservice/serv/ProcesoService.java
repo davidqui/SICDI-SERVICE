@@ -63,7 +63,9 @@ public class ProcesoService {
      */
     public Instancia instancia(String pin) {
         Instancia i = instanciaRepository.getOne(pin);
+        System.out.println("estado antes= "+i.getEstado());
         i.setService(this);
+        System.out.println("estado despues= "+i.getEstado());
         return i;
     }
     

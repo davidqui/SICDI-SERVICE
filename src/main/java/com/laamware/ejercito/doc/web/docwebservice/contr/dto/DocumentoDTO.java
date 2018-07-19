@@ -41,6 +41,12 @@ public class DocumentoDTO implements Serializable{
     
     @JsonProperty("archivo")
     private String archivo;
+    
+    @JsonProperty("dependencia")
+    private Integer dependencia;
+    
+    @JsonProperty("descripcion")
+    private String descripcion;
 
 //    public DocumentoDTO(@JsonProperty("grado") String grado, @JsonProperty("nombre_remitente") String nombreRemitente, @JsonProperty("titulo_remitente") String tituloRemitente,
 //            @JsonProperty("asunto") String asunto, @JsonProperty("numero_oficio") String numeroOficio, @JsonProperty("fecha_oficio") Date fechaOficio, 
@@ -138,6 +144,22 @@ public class DocumentoDTO implements Serializable{
         this.archivo = archivo;
     }
 
+    public Integer getDependencia() {
+        return dependencia;
+    }
+
+    public void setDependencia(Integer dependencia) {
+        this.dependencia = dependencia;
+    } 
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    
     @Override
     public String toString() {
         return "DocumentoDTO{" + "grado=" + grado + ", nombreRemitente=" + nombreRemitente + ", tituloRemitente=" + tituloRemitente + ", asunto=" + asunto + ", numeroOficio=" + numeroOficio + ", fechaOficio=" + fechaOficio + ", numeroFolios=" + numeroFolios + ", trazabilidad=" + trazabilidad + ", clasificacion=" + clasificacion + ", archivo=" + archivo + '}';

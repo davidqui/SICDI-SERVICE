@@ -7,6 +7,7 @@
 package com.laamware.ejercito.doc.web.docwebservice.serv;
 
 import com.laamware.ejercito.doc.web.docwebservice.contr.dto.DocumentoDTO;
+import com.laamware.ejercito.doc.web.docwebservice.entity.Dependencia;
 import com.laamware.ejercito.doc.web.docwebservice.entity.Instancia;
 import com.laamware.ejercito.doc.web.docwebservice.entity.Usuario;
 import com.laamware.ejercito.doc.web.docwebservice.entity.Documento;
@@ -35,15 +36,19 @@ public class DocumentoService {
     
     @Autowired
     private DocumentoRepository documentoRepository;
+    
+    @Autowired
+    private DependenciaService dependenciaService;
 
     public void crearDocumento(Integer proId, Usuario usuId, DocumentoDTO docInfo){
         
         try {
             // Se crea la instancia del proceso
+            final Documento documento = Documento.create();
+            final Dependencia dependencia = dependenciaService.findByID(docInfo.getDependencia());
             String pin = procesoService.instancia(proId, usuId);
             Instancia procesoInstancia = procesoService.instancia(pin);
-            System.out.println("PASA!= "+ pin);
-            final Documento documento = Documento.create();
+            System.out.println("PASA  "+dependencia+" != "+ pin);
             System.out.println("PASA1!");
             documento.setInstancia(procesoInstancia);
             documento.setEstadoTemporal(Documento.ESTADO_TEMPORAL);
@@ -51,9 +56,15 @@ public class DocumentoService {
             documento.setUsuarioUltimaAccion(usuId);
             documento.setQuien(usuId.getId());
             documento.setCuando(new Date());
-            System.out.println("PASA11.1!");
-            procesoInstancia.setVariable(Documento.DOC_ID, documento.getId(), usuId.getId());
-            System.out.println("PASA2!");
+            System.out.println("PASA11.1!= "+procesoInstancia.getEstado());
+            procesoInstancia.setVariable(Documento.DOC_ID, documento.getId(), dependencia.getId());
+            procesoInstancia.setVariable(Documento.DOC_STICKER_DATOS_COMPLETOS, "true", dependencia.getId());
+            procesoInstancia.setVariable(Documento.DOC_PUEDE_ARCHIVAR, "true", dependencia.getId());
+            procesoInstancia.setVariable(Documento.DOC_PUEDE_DAR_RESPUESTA, "true", dependencia.getId());
+            procesoInstancia.setVariable(Documento.DOC_VISTO_BUENO, "false", dependencia.getId());
+            System.out.println("PASA11.2!= "+procesoInstancia.getEstado());
+            procesoInstancia.setAsignado(dependencia.getUsuarioRegistro());
+            System.out.println("PASA2!= "+procesoInstancia.getEstado());
             instanciaRepository.saveAndFlush(procesoInstancia);
             
             System.out.println("PASA3!");
@@ -68,7 +79,8 @@ public class DocumentoService {
             //TODO DEFINIR -- -- 
             documento.setClasificacion(null);
             documento.setDescripcion(docInfo.getTrazabilidad());
-            documento.setCuando(new Date());
+            documento.setCuando(new Date());           
+            
             
             documentoRepository.saveAndFlush(documento);
             System.out.println("OK DOCUMENTO "+documento.toString()+" intancia "+pin);
