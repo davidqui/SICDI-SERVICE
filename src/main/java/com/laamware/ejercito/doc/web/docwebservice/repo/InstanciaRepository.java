@@ -21,4 +21,7 @@ public interface InstanciaRepository extends JpaRepository<Instancia, String> {
      * @return Instancia
      */
     public Instancia findOneByIdAndEstadoId(String id, Integer estado);
+    
+    
+    public Instancia findOneById(String id);
 }

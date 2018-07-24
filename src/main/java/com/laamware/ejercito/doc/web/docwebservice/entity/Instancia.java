@@ -55,8 +55,8 @@ public class Instancia extends AuditModifySupport {
     @JoinColumn(name = "USU_ID_ASIGNADO")
     private Usuario asignado;
 
-    @Transient
-    private ProcesoService service;
+//    @Transient
+//    private ProcesoService service;
 
     public String getId() {
         return id;
@@ -141,15 +141,22 @@ public class Instancia extends AuditModifySupport {
         return null;
     }
 
-    public ProcesoService getService() {
-        return service;
-    }
+//    public ProcesoService getService() {
+//        return service;
+//    }
+//
+//    public void setService(ProcesoService service) {
+//        this.service = service;
+//    }
 
-    public void setService(ProcesoService service) {
-        this.service = service;
-    }
+//    public Variable setVariable(String key, String value, Integer usuId) {
+//        return service.setVariable(this, key, value, usuId);
+//    }
 
-    public Variable setVariable(String key, String value, Integer usuId) {
-        return service.setVariable(this, key, value, usuId);
+    @Override
+    public String toString() {
+        return "Instancia{" + "id=" + id + ", proceso=" + proceso + ", estado=" + estado + ", variables=" + variables + ", observaciones=" + observaciones + ", asignado=" + asignado + '}';
     }
+    
+    
 }

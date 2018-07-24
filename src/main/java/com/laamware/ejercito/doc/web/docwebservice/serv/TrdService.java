@@ -5,7 +5,7 @@
  */
 package com.laamware.ejercito.doc.web.docwebservice.serv;
 
-import com.laamware.ejercito.doc.web.docwebservice.contr.dto.TrdDTO;
+import com.laamware.ejercito.doc.web.docwebservice.dto.TrdDTO;
 import com.laamware.ejercito.doc.web.docwebservice.entity.Trd;
 import com.laamware.ejercito.doc.web.docwebservice.repo.TrdRepository;
 import java.util.ArrayList;

@@ -5,11 +5,12 @@
  */
 package com.laamware.ejercito.doc.web.docwebservice.serv;
 
-import com.laamware.ejercito.doc.web.docwebservice.contr.dto.DependenciaDTO;
+import com.laamware.ejercito.doc.web.docwebservice.dto.DependenciaDTO;
 import com.laamware.ejercito.doc.web.docwebservice.entity.Dependencia;
 import com.laamware.ejercito.doc.web.docwebservice.repo.DependenciaRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -34,8 +35,8 @@ public class DependenciaService {
     }
     
     
-    public Dependencia findByID(Integer id){
-        return dependenciaRepository.getOne(id);
+    public Optional<Dependencia> findByID(Integer id) {
+        return dependenciaRepository.findById(id);
     }
     
     public List<DependenciaDTO> depsHierarchy() {

@@ -1,5 +1,6 @@
 package com.laamware.ejercito.doc.web.docwebservice;
 
+import com.laamware.ejercito.doc.web.docwebservice.entity.Instancia;
 import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -33,6 +34,7 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
+import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
@@ -108,7 +110,7 @@ public class App {
 
         return factory.getObject();
     }
-
+    
     @Bean
     public PlatformTransactionManager transactionManager(final EntityManagerFactory emf, final DataSource dataSource) {
         final JpaTransactionManager transactionManager = new JpaTransactionManager();

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.laamware.ejercito.doc.web.docwebservice.contr.dto;
+package com.laamware.ejercito.doc.web.docwebservice.dto;
 
 import java.io.Serializable;
 import java.util.List;

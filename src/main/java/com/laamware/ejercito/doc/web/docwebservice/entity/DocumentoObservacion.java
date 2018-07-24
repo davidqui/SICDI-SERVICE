@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -17,10 +18,8 @@ import org.hibernate.annotations.Parameter;
 public class DocumentoObservacion extends AuditCreateSupport {
 
 	@Id
-	@GenericGenerator(name = "DOCUMENTO_OBS_SEQ", strategy = "sequence", parameters = {
-			@Parameter(name = "sequence", value = "DOCUMENTO_OBS_SEQ"),
-			@Parameter(name = "allocationSize", value = "1") })
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DOCUMENTO_OBS_SEQ")
+        @SequenceGenerator(name = "DOCUMENTO_OBS_SEQ", sequenceName = "DOCUMENTO_OBS_SEQ", allocationSize = 1) 
+        @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DOCUMENTO_OBS_SEQ")
 	@Column(name = "DOB_ID")
 	private Integer id;
 

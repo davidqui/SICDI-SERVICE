@@ -5,19 +5,26 @@
  */
 package com.laamware.ejercito.doc.web.docwebservice.contr;
 
-import com.laamware.ejercito.doc.web.docwebservice.contr.dto.DependenciaDTO;
-import com.laamware.ejercito.doc.web.docwebservice.contr.dto.DocumentoDTO;
-import com.laamware.ejercito.doc.web.docwebservice.contr.dto.TrdDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.laamware.ejercito.doc.web.docwebservice.dto.DependenciaDTO;
+import com.laamware.ejercito.doc.web.docwebservice.dto.DocumentoDTO;
+import com.laamware.ejercito.doc.web.docwebservice.dto.TrdDTO;
 import com.laamware.ejercito.doc.web.docwebservice.entity.Clasificacion;
+import com.laamware.ejercito.doc.web.docwebservice.entity.Dependencia;
 import com.laamware.ejercito.doc.web.docwebservice.repo.UsuarioRepository;
 import com.laamware.ejercito.doc.web.docwebservice.serv.ClasificacionService;
 import com.laamware.ejercito.doc.web.docwebservice.serv.DependenciaService;
 import com.laamware.ejercito.doc.web.docwebservice.serv.DocumentoService;
+import com.laamware.ejercito.doc.web.docwebservice.serv.QueueService;
 import com.laamware.ejercito.doc.web.docwebservice.serv.TrdService;
 import com.laamware.ejercito.doc.web.docwebservice.serv.UsuarioWsService;
 import java.util.Enumeration;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +34,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  *
@@ -55,6 +61,9 @@ public class ApiController {
     
     @Autowired
     private TrdService trdService;
+    
+    @Autowired
+    private QueueService queueService;
     
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ResponseEntity<List<Clasificacion>> clasificaciones(){
@@ -94,7 +103,20 @@ public class ApiController {
     public ResponseEntity<?> postDocumento(@RequestBody DocumentoDTO document, HttpServletRequest request){
         if (!authVerification(request)) 
             return new ResponseEntity<>("No se proveyeron credenciales o son incorrectas",HttpStatus.UNAUTHORIZED);
-        documentoService.crearDocumento(9, usuarioRepository.getOne(9999), document);
+        String errors = DocumentoDTO.validarInfo(document);
+        if (!errors.isEmpty())
+            return new ResponseEntity<>(errors,HttpStatus.BAD_REQUEST);
+        final Optional<Dependencia> dependencia = dependenciaService.findByID(document.getDependencia());
+        if (!dependencia.isPresent())
+            return new ResponseEntity<>("{errores:[{\"dependencia\":\"No existe una dependencia con el id " + document.getDependencia() + "\"}]}",HttpStatus.BAD_REQUEST);
+        if (dependencia.get().getUsuarioRegistro() == null)
+            return new ResponseEntity<>("{errores:[{\"dependencia\":\"No existe un usuario registro para la dependencia con el id " + document.getDependencia() + "\"}]}",HttpStatus.BAD_REQUEST);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            queueService.enviarACola(mapper.writeValueAsString(document));
+        } catch (JsonProcessingException ex) {
+            return new ResponseEntity<>("ERROR SERIALIZANDO EL OBJETO",HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>("Creado Correctamente", HttpStatus.OK);
     }
     

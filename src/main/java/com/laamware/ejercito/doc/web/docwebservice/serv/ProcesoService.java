@@ -6,18 +6,14 @@
 
 package com.laamware.ejercito.doc.web.docwebservice.serv;
 
-import com.laamware.ejercito.doc.web.docwebservice.entity.Estado;
 import com.laamware.ejercito.doc.web.docwebservice.entity.Instancia;
 import com.laamware.ejercito.doc.web.docwebservice.entity.Usuario;
 import com.laamware.ejercito.doc.web.docwebservice.entity.Variable;
 import com.laamware.ejercito.doc.web.docwebservice.repo.InstanciaRepository;
-import com.laamware.ejercito.doc.web.docwebservice.repo.ProcesoEstadoRepository;
 import com.laamware.ejercito.doc.web.docwebservice.repo.VariableRepository;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -33,9 +29,7 @@ public class ProcesoService {
     
     @Autowired
     private VariableRepository variableRepository;
-    
-    @Autowired
-    private ProcesoEstadoRepository procesoEstadoRepository;
+
     
     /**
      * Crea una nueva instancia de un proceso. Tener en cuenta que la instancia
@@ -70,9 +64,6 @@ public class ProcesoService {
      */
     public Instancia instancia(String pin) {
         Instancia i = instanciaRepository.getOne(pin);
-        Estado estado = procesoEstadoRepository.findEstadoInicialByProId(i.getProceso().getId());
-        i.setEstado(estado);
-        i.setService(this);
         return i;
     }
     
