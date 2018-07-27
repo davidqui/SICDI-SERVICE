@@ -16,10 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+ * servicio para la recepción de contenido del {@link Instancia}
  *
- * @author egonzalezm
+ * @author Edison Gonzalez
  * @since 1.8
- * @version 07/12/2018
+ * @version 23/07/2018 Issue #173 (SICDI-Controltech) feature-173
  */
 @Service
 public class ProcesoService {

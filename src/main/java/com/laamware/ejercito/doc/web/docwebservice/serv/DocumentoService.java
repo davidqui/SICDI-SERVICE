@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.laamware.ejercito.doc.web.docwebservice.serv;
 
 import com.laamware.ejercito.doc.web.docwebservice.dto.DocumentoDTO;
@@ -24,10 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- *
- * @author egonzalezm
+ * Servicio de lógica de negocio para {@link Documento}.
+ * @author Samuel Delgado Muñoz
  * @since 1.8
- * @version 07/12/2018
+ * @version 23/07/2018 Issue #173 (SICDI-Controltech) feature-173
  */
 @Service
 public class DocumentoService {
@@ -50,6 +45,12 @@ public class DocumentoService {
     @Autowired
     private DocumentoObservacionRepository documentoObservacionRepository;
 
+    /***
+     * Método que inicializa un documento para la radicación en SICDI
+     * @param proId
+     * @param usuId
+     * @param docInfo 
+     */
     public void crearDocumento(Integer proId, Usuario usuId, DocumentoDTO docInfo){
         try {
             // Se crea la instancia del proceso

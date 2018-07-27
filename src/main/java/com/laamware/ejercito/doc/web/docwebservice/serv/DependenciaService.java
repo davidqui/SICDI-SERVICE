@@ -17,7 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
- * Servicio para las dependeicas del web service de SICDI
+ * Servicio para {@link Dependencia} del web service de SICDI
  *
  * @author Samuel Delgado Muñoz
  * @since 1.8
@@ -39,6 +39,10 @@ public class DependenciaService {
         return dependenciaRepository.findById(id);
     }
     
+    /**
+     * Contrulle el arbol de dependencias padre.
+     * @return List<DependenciaDTO> arbol
+     */
     public List<DependenciaDTO> depsHierarchy() {
         /*
          * 2018-07-11 samuel.delgado@controltechcg.com Issue #179 (SICDI-Controltech)

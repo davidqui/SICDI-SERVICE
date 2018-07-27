@@ -11,8 +11,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
+ * servicio para la recepción de contenido del activeMQ
  *
- * @author sdelgadom
+ * @author Samuel Delgado Muñoz
+ * @since 1.8
+ * @version 23/07/2018 Issue #173 (SICDI-Controltech) feature-173
  */
 @Component
 public class QueueListener {
@@ -25,17 +28,19 @@ public class QueueListener {
     @Autowired
     private UsuarioRepository usuarioRepository;
     
-    @JmsListener(destination = "WEB_SERVICE_ACTIVEMQ_QUEUE")
+    /***
+     * Metodo que recibe los elementos del activeMQ para crear los documentos.
+     * @param documento 
+     */
     @Transactional
+    @JmsListener(destination = "WEB_SERVICE_ACTIVEMQ_QUEUE")
     public void receptorDocumentos(String documento){
         try {
             ObjectMapper mapper = new ObjectMapper();
             DocumentoDTO doc = mapper.readValue(documento, DocumentoDTO.class);
-            System.out.println("TRAIGO -- "+doc.toString());
             documentoService.crearDocumento(PROCESO_ID, usuarioRepository.getOne(9999), doc);
-            System.out.println("Todo ok");
         } catch (Exception ex) {
-            System.out.println("Ocurrio un error");
+            
         }
     }
 }
