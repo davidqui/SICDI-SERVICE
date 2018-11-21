@@ -5,6 +5,7 @@
  */
 package com.laamware.ejercito.doc.web.docwebservice.repo;
 
+import com.laamware.ejercito.doc.web.docwebservice.dto.UsuarioDTO;
 import com.laamware.ejercito.doc.web.docwebservice.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,6 +14,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author sdelgadom
  */
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
+
+
+    Usuario findOneByLoginAndActivoTrue(String login);
     
     
 }

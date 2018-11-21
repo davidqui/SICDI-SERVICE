@@ -103,6 +103,12 @@
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-broker</artifactId>
         </dependency>
+        <dependency>
+            <groupId>bouncycastle</groupId>
+            <artifactId>bcprov-jdk14</artifactId>
+            <version>138</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
     <repositories>
