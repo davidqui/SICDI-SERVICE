@@ -69,22 +69,17 @@ public class ApiController {
 
 
     @RequestMapping(value = "/usuario", method = RequestMethod.POST)
-    public ResponseEntity<UsuarioDTO> findByLogin(String login) throws SQLException {
-        System.out.println("com.laamware.ejercito.doc.web.docwebservice.contr.TestController.clasificaciones()");
-
-
+    public ResponseEntity<UsuarioDTO> findByLogin(String login) {
             Usuario usuario = usuarioService.findByLogin(login);
 
+        if (usuario == null) {
+            String mensaje = "El Usuario No Existe";
+            return new ResponseEntity(mensaje,HttpStatus.NO_CONTENT);
 
-//        if (usuario.getActivo() == null) {
-//            return new ResponseEntity(HttpStatus.NO_CONTENT);
-//        }
-
-
+        }
 
            UsuarioDTO dto = new UsuarioDTO();
 
-//           try {
            dto.setNombre(usuario.getNombre());
            dto.setLogin(usuario.getLogin());
            dto.setClasificacion(usuario.getClasificacion().getNombre());

@@ -28,12 +28,8 @@ public class UsuarioService {
     
     @Autowired
     private UsuarioRepository usuarioRepository;
-    
 
-    
-    
     public Usuario findByLogin(String login) {
-
 
         return usuarioRepository.findOneByLoginAndActivoTrue(login);
     }
